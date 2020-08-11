@@ -5,6 +5,7 @@ const { buildSchema, GraphQLSchema } = require('graphql');
 const mongoose = require('mongoose');
 const graphQlSchema = require('./graohql/schema/index');
 const graphQlResolvers = require('./graohql/resolvers/index');
+const isAuth = require('./middleware/is-auth');
 
 const app = express();
 
@@ -18,6 +19,8 @@ app.use(
     graphiql: true,
   })
 );
+
+app.use(isAuth);
 
 mongoose
   .connect(
