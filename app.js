@@ -22,6 +22,8 @@ app.use(bodyParser.json());
 // });
 app.use(cors());
 
+app.use(isAuth);
+
 app.use(
   '/graphql',
   graphqlHTTP({
@@ -30,8 +32,6 @@ app.use(
     graphiql: true,
   })
 );
-
-app.use(isAuth);
 
 mongoose
   .connect(
