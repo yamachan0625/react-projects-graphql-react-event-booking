@@ -33,26 +33,34 @@ class AuthPage extends Component {
 
     let requestBody = {
       query: `
-        query {
-          login(email: "${email}", password: "${password}") {
+        query Login($email: String!, $password: String!) {
+          login(email: $email, password: $password) {
             userId
             token
             tokenExpiration
           }
         }
       `,
+      variables: {
+        email: email,
+        password: password,
+      },
     };
 
     if (!this.state.isLogin) {
       requestBody = {
         query: `
-          mutation {
-            createUser(userInput: {email: "${email}", password: "${password}"}) {
+          mutation CreateUser($email: String!, $password: String!) {
+            createUser(userInput: {email: $email, password: $password}) {
               _id
               email
             }
           }
         `,
+        variables: {
+          email: email,
+          password: password,
+        },
       };
     }
 
@@ -92,12 +100,7 @@ class AuthPage extends Component {
         </div>
         <div className="form-control">
           <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            ref={this.passwordEl}
-            autoComplete="on"
-          />
+          <input type="password" id="password" ref={this.passwordEl} />
         </div>
         <div className="form-actions">
           <button type="submit">Submit</button>
