@@ -39,7 +39,6 @@ module.exports = {
       const booking = await Booking.findById({ _id: args.bookingId }).populate(
         'event'
       );
-      console.log(booking.user);
       const event = transformEvent(booking.event);
       await Booking.deleteOne({ _id: args.bookingId });
       return event;
